@@ -5,12 +5,12 @@ from flask import Flask, request, jsonify, Response
 from flask_limiter import Limiter
 from werkzeug.contrib.fixers import ProxyFix
 from operator import itemgetter
+from json import dumps
+from os import getcwd
 import redis
 import yaml
-import json
-import os
 
-config_file = os.getcwd() + '/' + 'config.yaml'
+config_file = getcwd() + '/' + 'config.yaml'
 config_yaml = yaml.load(file(config_file, 'r'))
 min_threshold = int(config_yaml['min_threshold'])
 max_threshold = int(config_yaml['max_threshold'])
@@ -65,12 +65,12 @@ def service_func(service):
         return str(len(maxed_host))
 
     if service == 'stats':
-        all_array = json.dumps(join_dicts, ensure_ascii=False, sort_keys=True).replace('{', '[').replace('}', ']')
+        all_array = dumps(join_dicts, ensure_ascii=False, sort_keys=True).replace('{', '[').replace('}', ']')
         lowest = min_host
         highest = max_host
-        available = json.dumps(lowest_host, ensure_ascii=False, sort_keys=True).replace('{', '[').replace('}', ']')
+        available = dumps(lowest_host, ensure_ascii=False, sort_keys=True).replace('{', '[').replace('}', ']')
         available_total = len(lowest_host)
-        unavailable = json.dumps(maxed_host, ensure_ascii=False, sort_keys=True).replace('{', '[').replace('}', ']')
+        unavailable = dumps(maxed_host, ensure_ascii=False, sort_keys=True).replace('{', '[').replace('}', ']')
         unavailable_total = len(maxed_host)
         total = len(join_dicts)
 
