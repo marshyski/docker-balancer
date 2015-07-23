@@ -105,10 +105,11 @@ def post_docker_info(cpu, count):
     value = "%s %s" % (cpu, count)
     db.set(ip_addr, value)
 
-    return jsonify(docker_host=ip, cpu_percent=cpu, docker_count=count)
+    return jsonify(docker_host=ip_addr, cpu_percent=cpu, docker_count=count)
 
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
 if __name__ == '__main__':
+    app.debug = True
     app.run()
