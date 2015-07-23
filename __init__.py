@@ -65,20 +65,21 @@ def service_func(service):
         return str(len(maxed_host))
 
     if service == 'stats':
-        all_array = dumps(join_dicts, ensure_ascii=False, sort_keys=True).replace('{', '[').replace('}', ']')
+        all_array = dumps(join_dicts, ensure_ascii=False, sort_keys=True)
         lowest = min_host
         highest = max_host
-        available = dumps(lowest_host, ensure_ascii=False, sort_keys=True).replace('{', '[').replace('}', ']')
+        available = dumps(lowest_host, ensure_ascii=False, sort_keys=True)
         available_total = len(lowest_host)
-        unavailable = dumps(maxed_host, ensure_ascii=False, sort_keys=True).replace('{', '[').replace('}', ']')
+        unavailable = dumps(maxed_host, ensure_ascii=False, sort_keys=True)
         unavailable_total = len(maxed_host)
         total = len(join_dicts)
 
         return \
         Response(str({"all": all_array, "available": available, "available_total": available_total, "highest": highest, \
         "lowest": lowest, "total": total, "unavailable": unavailable, "unavailable_total": \
-        unavailable_total}).replace("',", "',\n").replace("{'", "{\n '").replace("}", '\n}').replace(", '", ", \n '"), \
-        mimetype='application/json')
+        unavailable_total}).replace("'", '"').replace('"{', '{').replace('}"', '}').replace('",', '",\n')\
+        .replace('{"', '{\n "').replace("},", '\n },\n').replace(', "', ', \n "').replace('}}', '\n }\n}')\
+        , mimetype='application/json')
 
 @app.route('/api/<string:service>')
 def get_service(service):
