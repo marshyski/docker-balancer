@@ -14,7 +14,7 @@ Getting Started
 
   `/api/<cpu percent(0-100)>/<docker container count>`
 
-    curl -XPOST http://docker-balance/api/30/10
+    curl -XPOST http://docker-balancer/api/30/10
     {
       "cpu_percent": 70,
       "docker_count": 50,
@@ -25,47 +25,47 @@ Getting Started
 
 *lowest utilized host*
 
-    curl -XGET http://docker-balance/api/lowest
+    curl -XGET http://docker-balancer/api/lowest
     10.162.0.16
 
 *highest utilized host*
 
-    curl -XGET http://docker-balance/api/highest
+    curl -XGET http://docker-balancer/api/highest
     10.162.0.11
 
 *list all docker hosts*
 
-    curl -XGET http://docker-balance/api/all
+    curl -XGET http://docker-balancer/api/all
     ['10.162.0.10', '10.162.0.11', '10.162.0.12', '10.162.0.13', '10.162.0.14', '10.162.0.15', '10.162.0.16', '10.162.0.17', '10.162.0.18']
 
 *total of all docker hosts*
 
-		curl -XGET http://docker-balance/api/total
+		curl -XGET http://docker-balancer/api/total
 		9
 
 *list available healthy docker hosts*
 
-		curl -XGET http://docker-balance/api/available
+		curl -XGET http://docker-balancer/api/available
 		['10.162.0.10', '10.162.0.11', '10.162.0.14', '10.162.0.16', '10.162.0.18']
 
 *available healthy docker hosts total*
 
-		curl -XGET http://docker-balance/api/available-total
+		curl -XGET http://docker-balancer/api/available-total
 		5
 
 *list unavailable unhealthy docker hosts*
 
-		curl -XGET http://docker-balance/api/unavailable
+		curl -XGET http://docker-balancer/api/unavailable
 		['10.162.0.12', '10.162.0.13', '10.162.0.15', '10.162.0.17']
 
 *unavailable unhealthy docker hosts total*
 
-		curl -XGET http://docker-balance/api/unavailable-total
+		curl -XGET http://docker-balancer/api/unavailable-total
 		4
 
 **From anywhere show all metrics**
 
-     curl -XGET http://docker-balance/api/stats
+     curl -XGET http://docker-balancer/api/stats
      {
         "available": [
            "10.162.0.14",
@@ -140,4 +140,4 @@ Recommendations
  1. Have the API not listen on port 80
  2. Create IPTables/FirewallD/Security Group rules to only allow inbound traffic from CIDR or IP Ranges of Docker hosts
  3. Use SSL and Basic Auth in NGINX for the API
- 4. If you load balance docker-balance, a Redis cluster will have to be setup.
+ 4. If you load balance docker-balancer, a Redis cluster will have to be setup.
