@@ -11,11 +11,12 @@ import yaml
 
 config_file = getcwd() + '/' + 'config.yaml'
 config_yaml = yaml.load(file(config_file, 'r'))
-max_container_threshold = int(config_yaml['max_container_threshold'])
-max_cpu_threshold = int(config_yaml['max_cpu_threshold'])
 redis_host = config_yaml['redis_host']
 redis_port = config_yaml['redis_port']
 redis_db = config_yaml['redis_db']
+max_container_threshold = int(config_yaml['max_container_threshold'])
+max_cpu_threshold = int(config_yaml['max_cpu_threshold'])
+request_limit = config_yaml['request_limit']
 
 db = redis.StrictRedis(redis_host, redis_port, redis_db)
 app = Flask(__name__)
@@ -94,6 +95,7 @@ def service_func(service):
         , mimetype='application/json')
 
 @app.route('/api/<string:service>')
+@limiter.limit(request_limit)
 def get_service(service):
     """Route for processing dictionary using service function"""
     return service_func(service)
