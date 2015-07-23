@@ -9,7 +9,7 @@ from os import getcwd
 import redis
 import yaml
 
-config_file = getcwd() + '/' + 'config.yaml'
+config_file = getcwd() + '/docker-balancer/config.yaml'
 config_yaml = yaml.load(file(config_file, 'r'))
 redis_host = config_yaml['redis_host']
 redis_port = config_yaml['redis_port']
@@ -109,9 +109,7 @@ def post_docker_info(cpu, count):
 
     return jsonify(docker_host=ip_addr, cpu_percent=cpu, docker_count=count)
 
-
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
 if __name__ == '__main__':
-    app.debug = True
     app.run()
