@@ -1,4 +1,4 @@
-# docker-balance
+# docker-balancer
 
 Where should I deploy my containers based on resources?
 ----------------------------
