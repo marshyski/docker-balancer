@@ -86,8 +86,8 @@ def service_func(service):
         total = len(join_dicts)
 
         return \
-        Response(str({"all": all_array, "available": available, "available_total": available_total, "highest": highest, \
-        "lowest": lowest, "total": total, "unavailable": unavailable, "unavailable_total": \
+        Response(str({"all": all_array, "available": available, "available_total": available_total, \
+        "highest": highest, "lowest": lowest, "total": total, "unavailable": unavailable, "unavailable_total": \
         unavailable_total}).replace("'", '"').replace('"{', '{').replace('}"', '}').replace('",', '",\n')\
         .replace('{"', '{\n "').replace("},", '\n },\n').replace(', "', ', \n "').replace('}}', '\n }\n}')\
         .replace('"["', '[\n "').replace(']",', '\n ],')\
