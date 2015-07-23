@@ -4,13 +4,13 @@ Where should I deploy my containers based on resources?
 ----------------------------
 
 
-Based on thresholds defined on average CPU percentage and max number of containers.  Deploy containers to the least utilized hosts.
+Based on thresholds defined on average CPU percentage and max number of containers.  Deploy containers to the least utilized Docker host.
 
 
 Getting Started
 ---------------
 
-**From Docker Host ** (agent coming soon)
+**From Docker Host** (agent coming soon)
 
   `/api/<cpu percent(0-100)>/<docker container count>`
 
