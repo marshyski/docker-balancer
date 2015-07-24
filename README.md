@@ -14,7 +14,7 @@ Getting Started
 
   `/api/<cpu percent(0-100)>/<docker container count>`
 
-    curl -XPOST http://docker-balancer/api/30/10
+    curl -XPOST http://docker-balancer/api/70/50
     {
       "cpu_percent": 70,
       "docker_count": 50,
@@ -40,28 +40,28 @@ Getting Started
 
 *total of all docker hosts*
 
-		curl -XGET http://docker-balancer/api/total
-		9
+    curl -XGET http://docker-balancer/api/total
+    9
 
 *list available healthy docker hosts*
 
-		curl -XGET http://docker-balancer/api/available
-		['10.162.0.10', '10.162.0.11', '10.162.0.14', '10.162.0.16', '10.162.0.18']
+    curl -XGET http://docker-balancer/api/available
+    ['10.162.0.10', '10.162.0.11', '10.162.0.14', '10.162.0.16', '10.162.0.18']
 
 *available healthy docker hosts total*
 
-		curl -XGET http://docker-balancer/api/available-total
-		5
+    curl -XGET http://docker-balancer/api/available-total
+    5
 
 *list unavailable unhealthy docker hosts*
 
-		curl -XGET http://docker-balancer/api/unavailable
-		['10.162.0.12', '10.162.0.13', '10.162.0.15', '10.162.0.17']
+    curl -XGET http://docker-balancer/api/unavailable
+    ['10.162.0.12', '10.162.0.13', '10.162.0.15', '10.162.0.17']
 
 *unavailable unhealthy docker hosts total*
 
-		curl -XGET http://docker-balancer/api/unavailable-total
-		4
+    curl -XGET http://docker-balancer/api/unavailable-total
+    4
 
 **From anywhere show all metrics**
 
