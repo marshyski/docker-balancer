@@ -16,6 +16,7 @@ redis_port = config_yaml['redis_port']
 redis_db = config_yaml['redis_db']
 max_container_threshold = int(config_yaml['max_container_threshold'])
 max_cpu_threshold = int(config_yaml['max_cpu_threshold'])
+max_disk_threshold = int(config_yaml['max_disk_threshold'])
 request_limit = config_yaml['request_limit']
 
 db = redis.StrictRedis(redis_host, redis_port, redis_db)
@@ -31,8 +32,9 @@ def service_func(service):
 
     for key in keys:
         value = db.get(key)
-        cpu = int(value.split(' ', 1)[0])
-        count = int(value.split(' ', 1)[1])
+        cpu = int(value.split(' ', 2)[0])
+        count = int(value.split(' ', 2)[1])
+        disk = int(value.split(' ', 2)[2])
         all_hosts.append(key)
 
         if cpu >= max_cpu_threshold:
@@ -41,11 +43,17 @@ def service_func(service):
         if count >= max_container_threshold:
             maxed_host[key] = 'Containers=' + str(count)
 
+        if disk >= max_disk_threshold:
+            maxed_host[key] = 'Disk=' + str(disk)
+
         if cpu < max_cpu_threshold and key not in maxed_host:
             lowest_host[key] = cpu
 
         if count < max_container_threshold and key not in maxed_host:
             lowest_host[key] = count
+
+        if disk < max_disk_threshold and key not in maxed_host:
+            lowest_host[key] = disk
 
     min_host = min(lowest_host, key=lowest_host.get)
     max_host = max(lowest_host, key=lowest_host.get)
@@ -100,16 +108,17 @@ def get_service(service):
     """Route for processing dictionary using service function"""
     return service_func(service)
 
-@app.route('/api/<int:cpu>/<int:count>', methods=['POST'])
+@app.route('/api/<int:cpu>/<int:count>/<int:disk>', methods=['POST'])
 def post_docker_info(cpu, count):
     """Post Docker host CPU utilization percent and docker container count"""
     ip_addr = request.remote_addr
-    value = "%s %s" % (cpu, count)
+    value = "%s %s %s" % (cpu, count, disk)
     db.set(ip_addr, value)
 
-    return jsonify(docker_host=ip_addr, cpu_percent=cpu, docker_count=count)
+    return jsonify(docker_host=ip_addr, cpu_percent=cpu, docker_count=count, disk_percent=disk)
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
 if __name__ == '__main__':
+    app.debug = True
     app.run()

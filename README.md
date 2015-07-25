@@ -4,7 +4,7 @@ Where should I deploy my containers based on resources?
 ----------------------------
 
 
-Based on thresholds defined on average CPU percentage and max number of containers.  Deploy containers to the lowest utilized Docker host.
+Based on thresholds defined on max number of containers, average CPU and disk percentage.  Deploy containers to the lowest utilized Docker host.
 
 
 Getting Started
@@ -17,6 +17,7 @@ Getting Started
     curl -XPOST http://docker-balancer/api/70/50
     {
       "cpu_percent": 70,
+      "disk_percent": 6,
       "docker_count": 50,
       "docker_host": "10.162.0.12"
     }
@@ -72,7 +73,6 @@ Getting Started
            "10.162.0.18",
            "10.162.0.16",
            "10.162.0.10",
-           "10.162.0.11"
         ],
         "lowest": "10.162.0.16",
         "all": [
@@ -91,6 +91,7 @@ Getting Started
         "highest": "10.162.0.11",
         "unavailable_total": 4,
         "unavailable": {
+           "10.162.0.11": "Disk=85",
            "10.162.0.12": "Containers=50",
            "10.162.0.13": "Containers=50",
            "10.162.0.15": "CPU=90",
