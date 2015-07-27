@@ -12,9 +12,9 @@ Getting Started
 
 **From Docker Host** (agent coming soon)
 
-  `/api/<cpu percent(0-100)>/<docker container count>`
+  `/api/<cpu percent(0-100)>/<docker container count>/<disk percent (0-100)`
 
-    curl -XPOST http://docker-balancer/api/70/50
+    curl -XPOST http://docker-balancer/api/70/50/6
     {
       "cpu_percent": 70,
       "disk_percent": 6,
