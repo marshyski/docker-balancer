@@ -109,7 +109,7 @@ def get_service(service):
     return service_func(service)
 
 @app.route('/api/<int:cpu>/<int:count>/<int:disk>', methods=['POST'])
-def post_docker_info(cpu, count):
+def post_docker_info(cpu, count, disk):
     """Post Docker host CPU utilization percent and docker container count"""
     ip_addr = request.remote_addr
     value = "%s %s %s" % (cpu, count, disk)
