@@ -16,7 +16,7 @@ if [[ `grep ^nginx /etc/passwd` != "" ]]; then
 fi
 
 if [[ `grep ^www-data /etc/passwd` != "" ]]; then
-   GUN_USER=wwww-data
+   GUN_USER=www-data
 fi
 
 
