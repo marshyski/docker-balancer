@@ -130,6 +130,9 @@ Configurations
 	# Max CPU percent threshold, default is 90
 	max_cpu_threshold: '90'
 
+  # Max Disk percent threshold, default is 85
+  max_disk_threshold: '85'
+
     # API request rate limit for metrics, default is '1 per second'
     # http://flask-limiter.readthedocs.org/en/stable/
     request_limit:
